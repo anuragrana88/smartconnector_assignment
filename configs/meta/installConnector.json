@@ -1,0 +1,42 @@
+{
+  "connection-netsuite": {
+    "dependson": [],
+    "filelocation": "GitHub/sc_installer/configs/connections/netsuite.json"
+  },
+  "integration": {
+    "name": "integration",
+    "filelocation": "GitHub/sc_installer/configs/integrations/netsuiteintegration-schema.json",
+    "dependson": [
+      "state",
+      "connection-netsuite",
+      "export-netsuite-customer",
+      "import-netsuite-customer",
+      "flow-netsuite-customer"
+    ]
+  },
+  "import-netsuite-customer": {
+    "name": "import-netsuite-customer",
+    "dependson": [
+      "state",
+      "connection-netsuite",
+      "export-netsuite-customer"
+    ],
+    "filelocation": "GitHub/sc_installer/configs/imports/import-netsuite-customer.json"
+  },
+  "export-netsuite-customer": {
+    "filelocation": "GitHub/sc_installer/configs/exports/export-netsuite-customer.json",
+    "dependson": [
+      "state",
+      "connection-netsuite"
+    ]
+  },
+  "flow-netsuite-customer": {
+    "filelocation": "GitHub/sc_installer/configs/flows/flows.json",
+    "dependson": [
+      "state",
+      "connection-netsuite",
+      "export-netsuite-customer",
+      "import-netsuite-customer"
+    ]
+  }
+}

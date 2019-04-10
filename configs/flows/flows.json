@@ -1,0 +1,20 @@
+{
+  "data": {
+    "disabled": false,
+    "description": "Export Customers and add them in NetSuite custom record",
+    "name": "DF1 Export Customer"
+  },
+  "resourcetype": "flows",
+  "jsonpath": [
+    {
+      "record": "export-netsuite-customer",
+      "readfrom": "_id",
+      "writeto": "_exportId"
+    },
+    {
+      "record": "import-netsuite-customer",
+      "readfrom": "_id",
+      "writeto": "_importId"
+    }
+  ]
+}

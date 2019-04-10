@@ -1,0 +1,152 @@
+{
+  "data": {
+    "name": "NetSuite Custom Connector",
+    "install": [
+      {
+        "name": "NetSuite Connection",
+        "description": "Configure NetSuite account credentials",
+        "imageURL": "/images/company-logos/netsuite.png",
+        "completed": false,
+        "installerFunction": "verifyNetSuiteConnection"
+      },
+      {
+        "name": "Integrator Bundle",
+        "description": "Install Integrator Bundle in NetSuite",
+        "imageURL": "/images/company-logos/netsuite.png",
+        "installURL": "",
+        "completed": false,
+        "installerFunction": "verifyIntegratorBundleInstallation"
+      }
+    ],
+    "mode": "install",
+    "settings": {
+      "commonresources": {},
+      "general": [
+        {
+          "id": "null"
+        }
+      ],
+      "storemap": [
+        {
+          "accountname": "defaultaccountname",
+          "accountid": "defaultaccountid",
+          "imports": [
+            {}
+          ],
+          "exports": [
+            {}
+          ],
+          "flows": [
+            {}
+          ],
+          "savedSeaches": [
+            {}
+          ],
+          "asyncHelpers": [
+            {}
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "fields": [
+            {
+              "tooltip": "By default all customer will be exported, to override this functionality set this checkbox and sync customers created/updated since last time the flow ran.",
+              "name": "",
+              "type": "checkbox",
+              "value": false,
+              "label": "Export Delta Customer"
+            },
+            {
+              "options": [
+                []
+              ],
+              "supportsRefresh": true,
+              "name": "",
+              "type": "select",
+              "value": "",
+              "required": false,
+              "label": "Prefix for Customer Name",
+              "tooltip": "Select the prefix that you want use in customer name. For example: Mr. John Shaw"
+            }
+          ],
+          "flows": [
+            {
+              "showSchedule": true,
+              "showMapping": true,
+              "_id": ""
+            }
+          ],
+          "columns": 1,
+          "title": "Order"
+        }
+      ]
+    }
+  },
+  "resourcetype": "integrations",
+  "jsonpath": [
+    {
+      "record": "versionInfo",
+      "readfrom": "version",
+      "writeto": "version"
+    },
+    {
+      "record": "connection-netsuite",
+      "readfrom": "_id",
+      "writeto": "_connectionId",
+      "writetopath": "$.install[?(@.installerFunction==\"verifyNetSuiteConnection\")]"
+    },
+    {
+      "record": "state",
+      "readfrom": "_integrationId",
+      "writeto": "_id"
+    },
+    {
+      "record": "connection-netsuite",
+      "readfrom": "_id",
+      "writeto": "netsuiteConnectionId",
+      "writetopath": "$.settings.commonresources"
+    },
+    {
+      "record": "flow-netsuite-customer",
+      "readfrom": "_id",
+      "writeto": "_id",
+      "writetopath": "$.settings.sections[0].flows[0]"
+    },
+    {
+      "readfrom": [
+        {
+          "readfrom": "exports_"
+        },
+        {
+          "record": "export-netsuite-customer",
+          "readfrom": "_id"
+        },
+        {
+          "readfrom": "_exportDelta"
+        }
+      ],
+      "writeto": "name",
+      "writetopath": "$..fields[?(@.label==\"Export Delta Customer\")]"
+    },
+    {
+      "readfrom": [
+        {
+          "readfrom": "imports_"
+        },
+        {
+          "record": "import-netsuite-customer",
+          "readfrom": "_id"
+        },
+        {
+          "readfrom": "_addPrefix"
+        },
+        {
+          "readfrom": "_listPrefixNames"
+        }
+      ],
+      "writeto": "name",
+      "writetopath": "$..fields[?(@.label==\"Prefix for Customer Name\")]"
+    }
+  ]
+}

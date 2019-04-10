@@ -1,0 +1,27 @@
+{
+  "name": "netsuite-smart-connector",
+  "main": "index.js",
+  "version": "1.0.0",
+  "engines": {
+    "node": "0.12.x"
+  },
+  "dependencies": {
+    "async": "1.4.2",
+    "lodash": "2.4.1",
+    "jsonpath": "0.2.6",
+    "request": "2.81.0",
+    "winston": "2.2.0",
+    "extend": "~3.0.0",
+    "xpath": "0.0.23",
+    "xmldom": "0.1.22",
+    "connector-utils": "file:../connector-utils",
+    "abstract-connector": "file:../abstract-connector",
+    "express-integrator-extension": "^0.2.4"
+  },
+  "devDependencies": {
+    "mocha": "2.2.5",
+    "sinon": "1.9.1",
+    "istanbul": "0.3.18",
+    "nock": "^2.3.0"
+  }
+}

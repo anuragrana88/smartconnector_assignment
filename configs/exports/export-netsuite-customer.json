@@ -1,0 +1,37 @@
+{
+  "data": {
+    "name": "Export Customers from NetSuite",
+    "asynchronous": true,
+    "pageSize": 20,
+    "sampleData": {
+      "id": "1245",
+      "recordType": "customer",
+      "Name": "Alex Fabre",
+      "ShipAddress": "Alex Fabre\n101 Main St\nSan Francisco CA 94131 \nUnited States",
+      "Email": "info@fabreart.com",
+      "Phone": "415 555 1212"
+    },
+    "netsuite": {
+      "type": "restlet",
+      "skipGrouping": true,
+      "statsOnly": false,
+      "restlet": {
+        "recordType": "customer",
+        "searchId": "3832",
+        "criteria": []
+      },
+      "distributed": {
+        "disabled": false,
+        "forceReload": false
+      }
+    }
+  },
+  "resourcetype": "exports",
+  "jsonpath": [
+    {
+      "record": "connection-netsuite",
+      "readfrom": "_id",
+      "writeto": "_connectionId"
+    }
+  ]
+}
