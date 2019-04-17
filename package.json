@@ -2,9 +2,6 @@
   "name": "netsuite-smart-connector",
   "main": "index.js",
   "version": "1.0.0",
-  "engines": {
-    "node": "0.12.x"
-  },
   "dependencies": {
     "async": "1.4.2",
     "lodash": "2.4.1",

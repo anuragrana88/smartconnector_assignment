@@ -63,7 +63,7 @@ function NetSuiteSettings() {
         })
     }
 
-    var exportDelta = function(paramObject, callback){
+    var exportDelta = function (paramObject, callback) {
         logger.info('inside exportDelta setting, paramObject: ' + JSON.stringify(paramObject))
         var newSettings = paramObject.newSettings
             , settingParams = paramObject.settingParams
@@ -73,41 +73,83 @@ function NetSuiteSettings() {
         var isDelta = newSettings[setting]
             , exportId = settingParams[1]
 
-            InstallerUtils.getAdaptor({
-                resourceType: 'exports'
-                , resourceId: exportId
-                , bearerToken: options.bearerToken
-            }, function (err, body) {
-                if (err) return callback(err)
-                try {
-                    if(isDelta) {
-                        body['type'] = 'delta';
-                        body['delta'] = {};
-                        body['delta']['dateField'] = 'lastmodifieddate';
-                    }else{
-                        delete body['type'];
-                        delete body['delta'];
-                    }
-                    InstallerUtils.putAdaptor({
-                        resourceType: 'exports'
-                        , resourceId: exportId
-                        , bearerToken: options.bearerToken
-                        , body: body
-                    }, function (e, b) {
-                        if (e) return callback(e)
-                        return Settings.setFieldValues(paramObject, callback)
-                    })
-                } catch (ex) {
-                    logger.info('exportDelta, unable to update export')
-                    return callback(new Error('Unable to update export. Exception : ' + ex.message))
+        InstallerUtils.getAdaptor({
+            resourceType: 'exports'
+            , resourceId: exportId
+            , bearerToken: options.bearerToken
+        }, function (err, body) {
+            if (err) return callback(err)
+            try {
+                if (isDelta) {
+                    body['type'] = 'delta';
+                    body['delta'] = {};
+                    body['delta']['dateField'] = 'lastmodifieddate';
+                } else {
+                    delete body['type'];
+                    delete body['delta'];
                 }
-            })
+                InstallerUtils.putAdaptor({
+                    resourceType: 'exports'
+                    , resourceId: exportId
+                    , bearerToken: options.bearerToken
+                    , body: body
+                }, function (e, b) {
+                    if (e) return callback(e)
+                    return Settings.setFieldValues(paramObject, callback)
+                })
+            } catch (ex) {
+                logger.info('exportDelta, unable to update export')
+                return callback(new Error('Unable to update export. Exception : ' + ex.message))
+            }
+        })
+    }
+
+    var exportDeltaOrders = function (paramObject, callback) {
+        logger.info('inside exportDelta orders setting, paramObject: ' + JSON.stringify(paramObject))
+        var newSettings = paramObject.newSettings
+            , settingParams = paramObject.settingParams
+            , setting = paramObject.setting
+            , options = paramObject.options
+
+        var isDelta = newSettings[setting]
+            , exportId = settingParams[1]
+
+        InstallerUtils.getAdaptor({
+            resourceType: 'exports'
+            , resourceId: exportId
+            , bearerToken: options.bearerToken
+        }, function (err, body) {
+            if (err) return callback(err)
+            try {
+                if (isDelta) {
+                    body['type'] = 'delta';
+                    body['delta'] = {};
+                    body['delta']['dateField'] = 'lastmodifieddate';
+                } else {
+                    delete body['type'];
+                    delete body['delta'];
+                }
+                InstallerUtils.putAdaptor({
+                    resourceType: 'exports'
+                    , resourceId: exportId
+                    , bearerToken: options.bearerToken
+                    , body: body
+                }, function (e, b) {
+                    if (e) return callback(e)
+                    return Settings.setFieldValues(paramObject, callback)
+                })
+            } catch (ex) {
+                logger.info('exportDelta orders, unable to update export')
+                return callback(new Error('Unable to update export. Exception : ' + ex.message))
+            }
+        })
     }
 
     this.getAmazonCustomSettings = function () {
         var settingsToBeRegistered = [
             {name: 'exportDelta', method: exportDelta}
             , {name: 'addPrefix', method: addPrefix}
+            , {name: 'exportDeltaOrders', method: exportDeltaOrders}
         ]
             , refreshMetaDataFunctionsToBeRegistered = [
             {name: 'listPrefixNames', method: listPrefixNames}

@@ -1,6 +1,7 @@
 {
   "data": {
     "name": "NetSuite Custom Connector",
+    "version": "1.0.0",
     "install": [
       {
         "name": "NetSuite Connection",

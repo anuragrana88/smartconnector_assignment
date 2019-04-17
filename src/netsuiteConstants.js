@@ -13,6 +13,7 @@ var _ = require('lodash'),
     }
     , NETSUITE_CONSTANTS = {
         NETSUITE_CONNECTORID: '5ca2e8a82c14ff0838165e1e'
+        , UPDATE_CODE_REPO: '../updateCodeRepo/1.0.1'
     };
 
 _.each(INSTALLER_CONSTANTS, function (v, k) {
